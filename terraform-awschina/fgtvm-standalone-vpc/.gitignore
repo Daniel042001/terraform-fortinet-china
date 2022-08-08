@@ -1,0 +1,13 @@
+!.gitignore
+
+.terraform/
+.terraform.lock.hcl
+
+generated/
+
+tfplan
+
+*.tfstate
+*.tfstate.*
+
+*.lic
