@@ -3,10 +3,11 @@ locals {
   nameSgFgtPrivate = "sg_fgt_private"
 }
 
+#################### FortiGate Public [port1] ####################
 resource "aws_security_group" "sgFgtPublic" {
   name        = local.nameSgFgtPublic
   description = "FortiGate public facing security group"
-  vpc_id      = aws_vpc.vpcNgfw.id
+  vpc_id      = var.isProvisionVpcSniffer == true ? aws_vpc.vpcNgfw[0].id : var.paramVpcCustomerId
 
   egress {
     from_port   = 0
@@ -32,41 +33,26 @@ resource "aws_security_group" "sgFgtPublic" {
   }
 
   ingress {
-    description = "HTTPS"
-    from_port   = 443
-    to_port     = 443
+    description = "FGTHTTPS"
+    from_port   = var.portFgtHttps
+    to_port     = var.portFgtHttps
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
 
-
-  ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "VPN-IKE"
-    from_port   = 500
-    to_port     = 500
-    protocol    = "udp"
-  }
-
-  ingress {
-    cidr_blocks = ["0.0.0.0/0"]
-    description = "VPN-NATT"
-    from_port   = 4500
-    to_port     = 4500
-    protocol    = "udp"
-  }
-
   tags = {
     Name      = local.nameSgFgtPublic
-    Terraform = "true"
+    Terraform = true
+    Project   = var.ProjectName
   }
 }
 
 
+#################### FortiGate Private [port2] ####################
 resource "aws_security_group" "sgFgtPrivate" {
   name        = local.nameSgFgtPrivate
   description = "FortiGate Private facing security group"
-  vpc_id      = aws_vpc.vpcNgfw.id
+  vpc_id      = var.isProvisionVpcSniffer == true ? aws_vpc.vpcNgfw[0].id : var.paramVpcCustomerId
 
   egress {
     from_port   = 0
@@ -84,6 +70,7 @@ resource "aws_security_group" "sgFgtPrivate" {
 
   tags = {
     Name      = local.nameSgFgtPrivate
-    Terraform = "true"
+    Terraform = true
+    Project   = var.ProjectName
   }
 }

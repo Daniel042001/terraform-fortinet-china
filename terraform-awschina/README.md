@@ -1,57 +1,86 @@
-# terraform-fortinet-china
-## AWS
+# Fortinet-AWS
+
+## NOTICES!!!
+* FortiGate-VM automation is available for `AWS.China` and `AWS.Global`.  
+* For FortiGate version deatils, please refer to `Distribution Release Note`!!!  
+* Pay-as-you-go (`PAYG`) is available ONLY with `FortiGate v7.2.x` in `AWS.China`.  
+
+## Install awscli
+[AWS Documentation for Installing awscli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
+
+* Linux  
+``` sh
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+```
+
+* Windows  
+``` sh
+msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi
+```
+
+* MacOS  
+``` sh
+curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"
+sudo installer -pkg AWSCLIV2.pkg -target /
+```
 
 
 
-### Install awscli
-[AWS Documentation]https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html  
-
-[Linux]  
-curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"  
-unzip awscliv2.zip  
-sudo ./aws/install  
-
-[Windows]  
-msiexec.exe /i https://awscli.amazonaws.com/AWSCLIV2.msi  
-
-[MacOS]  
-curl "https://awscli.amazonaws.com/AWSCLIV2.pkg" -o "AWSCLIV2.pkg"  
-sudo installer -pkg AWSCLIV2.pkg -target /  
+## Configure awscli
+``` sh
+aws configure
+AWS Access Key ID [AK]:
+AWS Secret Access Key [SK]:
+Default region name [cn-northwest-1 | cn-north-1]:
+Default output format [yaml]:
+```
 
 
-
-### Configure awscli
-aws configure  
-AWS Access Key ID [AK]:  
-AWS Secret Access Key [SK]:  
-Default region name [cn-northwest-1 | cn-north-1]:  
-Default output format [yaml]:  
-
+## Custimize AWS AK/SK
+``` sh
+export AWS_ACCESS_KEY_ID="anaccesskey"
+export AWS_SECRET_ACCESS_KEY="asecretkey"
+export AWS_REGION="cn-northwest-1"
+```
 
 
-### Terraform configuration
-[Terraform Documentation]https://registry.terraform.io/providers/hashicorp/aws/latest/docs
-#### init
-terraform init
+## Terraform configuration
+[Terraform Registry Documentation for AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
-#### plan (run with 'Variables Definiation Files')
-terraform apply -out=tfplan -var-file="variables.tfvars" -var='adminPassword=****'
+* init  
+`terraform init`
 
-#### apply
-terraform apply "tfplan"
+* plan  
+MODIFY AS NEEDED > `terraform.tfvars`  
+`terraform apply -out=tfplan`
 
-#### check
-terraform state list
+* apply  
+`terraform apply "tfplan"`
 
-#### destroy
-terraform apply -destroy
+* check  
+`terraform state list`
+
+* destroy  
+`terraform apply -destroy`
 
 
 
-### Terraformer CLI
-[Terraformer]https://github.com/GoogleCloudPlatform/terraformer/blob/master/docs/aws.md  
-terraformer-aws.exe import aws --resources=vpc --filter=vpc=vpc-********** –-regions=cn-northwest-1  
-terraformer-aws.exe import aws --resources=sg --filter=security_group=sg-************  
-terraformer-aws.exe import aws --resources=eni --filter=network_interface=eni-**********  
-terraformer-aws.exe import aws --resources=ec2_instance --filter=instances=i-************  
-terraformer-aws.exe import aws --resources=rtb --filter=route_tables=rtb-**********  
+## Terraformer CLI
+[Terraformer for AWS](https://github.com/GoogleCloudPlatform/terraformer/blob/master/docs/aws.md)  
+``` sh
+terraformer-aws import aws --resources=vpc --filter=vpc=vpc-********** –-regions=cn-northwest-1
+terraformer-aws import aws --resources=sg --filter=security_group=sg-************
+terraformer-aws import aws --resources=eni --filter=network_interface=eni-**********
+terraformer-aws import aws --resources=ec2_instance --filter=instances=i-************
+terraformer-aws import aws --resources=rtb --filter=route_tables=rtb-**********
+```
+
+## AWSCLI examples
+* search for ami of AWS.China FortiGate  
+``` sh
+aws ec2 describe-images --region cn-north-1 --owners aws-marketplace --filters "Name=name,Values=FGT_VM64_AWS*"
+aws ec2 describe-images --region cn-northwest-1 --owners aws-marketplace --filters "Name=name,Values=FGT_VM64_AWS*"
+aws ec2 describe-images --region cn-northwest-1 --filters "Name=image-id,Values=ami-075c9f159ee0bdc1c"
+```
