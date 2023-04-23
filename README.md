@@ -2,8 +2,8 @@
 
 ## 1. Download our code
 * You can download our code via the following methods:  
-`Broswer Download`
-`git clone via a command line`
+`Browser Download`  
+`git clone via a command line`  
 
 * You can place the downloaded code wherever you deem necessary, for example:  
 `C:\terraform-fortinet-china`
