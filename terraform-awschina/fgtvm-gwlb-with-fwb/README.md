@@ -5,4 +5,9 @@
 4.  ACCESS FortiGate using `terraform output` parameters.
 
 ## Standalone FortiGate Topology
-![Image Text](https://github.com/Daniel042001/terraform-fortinet-china/blob/main/terraform-awschina/fgtvm-gwlb-with-fwb/fgtvm-gwlb-multiaz-singlevpc.png)
+### All-In-One VPC Solution WITHOUT bastion host
+![Image Text](https://github.com/Daniel042001/terraform-fortinet-china/blob/main/terraform-awschina/fgtvm-gwlb-with-fwb/fgtvm-gwlb-with-fwb-without-bastion.png)
+
+### All-In-One VPC Solution WITH bastion host
+![Image Text](https://github.com/Daniel042001/terraform-fortinet-china/blob/main/terraform-awschina/fgtvm-gwlb-with-fwb/fgtvm-gwlb-with-fwb-with-bastion.png)
+
