@@ -5,4 +5,4 @@
 4.  ACCESS FortiGate using `terraform output` parameters.
 
 ## Standalone FortiGate Topology
-![Image Text](https://gitee.com/danielshen/terraform-fortinet-china-dev/raw/dev/terraform-awschina/fgtvm-gwlb-multiaz-singlevpc/fgtvm-gwlb-multiaz-singlevpc.png)
+![Image Text](https://github.com/Daniel042001/terraform-fortinet-china/blob/main/terraform-awschina/fgtvm-gwlb-with-fwb/fgtvm-gwlb-multiaz-singlevpc.png)
