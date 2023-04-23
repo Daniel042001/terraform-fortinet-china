@@ -5,7 +5,7 @@
 * For FortiGate version deatils, please refer to `Distribution Release Note`!!!  
 * Pay-as-you-go (`PAYG`) is available ONLY with `FortiGate v7.2.x` in `AWS.China`.  
 
-## Install awscli
+## 1. Install awscli
 [AWS Documentation for Installing awscli](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
 
 * Linux  
@@ -27,8 +27,9 @@ sudo installer -pkg AWSCLIV2.pkg -target /
 ```
 
 
+## 2. Authenticating with AWS
 
-## Configure awscli
+### 2.1a Configure awscli for long-time usage
 ``` sh
 aws configure
 AWS Access Key ID [AK]:
@@ -38,15 +39,23 @@ Default output format [yaml]:
 ```
 
 
-## Custimize AWS AK/SK
+### 2.1b Configure awscli for one-time usage
+* SETTING Linux ENV
 ``` sh
 export AWS_ACCESS_KEY_ID="anaccesskey"
 export AWS_SECRET_ACCESS_KEY="asecretkey"
 export AWS_REGION="cn-northwest-1"
 ```
 
+* SETTING Windows PowerShell ENV
+``` sh
+$env:AWS_ACCESS_KEY_ID="anaccesskey"
+$env:AWS_SECRET_ACCESS_KEY="asecretkey"
+$env:AWS_REGION="cn-northwest-1"
+```
 
-## Terraform configuration
+
+## 3. Terraform configuration
 [Terraform Registry Documentation for AWS](https://registry.terraform.io/providers/hashicorp/aws/latest/docs)
 
 * init  
@@ -54,20 +63,17 @@ export AWS_REGION="cn-northwest-1"
 
 * plan  
 MODIFY AS NEEDED > `terraform.tfvars`  
-`terraform apply -out=tfplan`
+`terraform plan -out=tfplan`
 
 * apply  
 `terraform apply "tfplan"`
 
-* check  
-`terraform state list`
-
 * destroy  
-`terraform apply -destroy`
+`terraform destroy`
 
 
-
-## Terraformer CLI
+## APPENDIX
+### Terraformer CLI
 [Terraformer for AWS](https://github.com/GoogleCloudPlatform/terraformer/blob/master/docs/aws.md)  
 ``` sh
 terraformer-aws import aws --resources=vpc --filter=vpc=vpc-********** –-regions=cn-northwest-1
@@ -77,7 +83,7 @@ terraformer-aws import aws --resources=ec2_instance --filter=instances=i-*******
 terraformer-aws import aws --resources=rtb --filter=route_tables=rtb-**********
 ```
 
-## AWSCLI examples
+### AWSCLI examples
 * search for ami of AWS.China FortiGate  
 ``` sh
 aws ec2 describe-images --region cn-north-1 --owners aws-marketplace --filters "Name=name,Values=FGT_VM64_AWS*"
