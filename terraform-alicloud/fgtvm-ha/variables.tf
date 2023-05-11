@@ -110,6 +110,34 @@ variable "amiFgtBYOL64" { # FGT AliCloud (BYOL) - 6.4.5, cn-guangzhou is not ava
 }
 
 
+variable "amiFgtBYOL70" { # FOS-7.0.8
+  type = map(any)
+  default = {
+    cn-beijing     = "m-2ze7c3ow8glgvnb9r6su"
+    cn-qingdao     = "m-m5e0wjym18t87mwq8mij"
+    cn-zhangjiakou = "m-8vb733jos1zwkc2w3l2t"
+    cn-huhehaote   = "m-hp30ofk1ij7glyx3sho1"
+    cn-hangzhou    = "m-bp106q966nz056oi0sau"
+    cn-shanghai    = "m-uf6guxuyl6z6kluwcas9"
+    cn-shenzhen    = "m-wz9hajh4lzcynut9nklm"
+    cn-heyuan      = "m-f8z1yo739z9yxo55dy7q"
+    cn-chengdu     = "m-2vcbbgfpfl5jiqe3hzdk"
+    cn-hongkong    = "m-j6c41val1n065dv3g9ky"
+    ap-southeast-1 = "m-t4ngylld7yo49irasyuf"
+    ap-southeast-2 = "m-p0wgg913jke2sbn4zhpd"
+    ap-southeast-3 = "m-8psauaxdqaz81tmwf6ui"
+    ap-southeast-5 = "m-k1a2zw0o19dyt8ow0m5m"
+    ap-northeast-1 = "m-6we1tt40qp4bscr8ckig"
+    us-west-1      = "m-rj90r2pe51hc4q8gashy"
+    us-east-1      = "m-0xi51ir1zn4ytzv8avb1"
+    eu-central-1   = "m-gw8h70kvvafrmzm82jqj"
+    eu-west-1      = "m-d7o2bn825whxf77kbau7"
+    me-east-1      = "m-eb3j7r0dsl5jf4gxaaj3"
+    ap-south-1     = "m-a2de0xd6s73fbolpcp9u"
+  }
+}
+
+
 #################### FortiGate Configuration File Variables ####################
 variable "portFgtHttps" {
   type = string

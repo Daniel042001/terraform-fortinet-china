@@ -98,7 +98,7 @@ resource "alicloud_instance" "fgt" {
 
   instance_name        = "FG-${var.CompanyName}-${count.index + 1}"
   security_groups      = alicloud_security_group.sgFgtPublic.*.id
-  image_id             = var.amiFgtBYOL64[var.regionName]
+  image_id             = var.amiFgtBYOL70[var.regionName]
   instance_type        = var.instanceTypeFgtFixed
   system_disk_category = var.regionName == "cn-qingdao" ? "cloud_ssd" : "cloud_essd"
   system_disk_size     = 40

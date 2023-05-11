@@ -10,7 +10,7 @@
 
 
 ProjectName = "fgtvm-ha"
-CompanyName = "fortinet"
+CompanyName = "FTNT"
 
 #################### VPC ####################
 regionName                = "cn-huhehaote"
