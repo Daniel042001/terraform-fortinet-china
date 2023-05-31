@@ -68,8 +68,8 @@ cntFgtPayg                = 1
 instanceTypeFgtFixed      = "c5.large"
 
 #### choose 'FortiGate FOS Version' ####
-# versionFgt              = "fgtvm72"
-versionFgt              = "fgtvm70"
+versionFgt              = "fgtvm72"
+# versionFgt              = "fgtvm70"
 # versionFgt              = "fgtvm64"
 
 #################### FortiWeb ####################
