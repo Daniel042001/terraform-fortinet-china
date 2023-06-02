@@ -80,7 +80,6 @@ resource "aws_eip" "eipFgtMgmt" {
   count = var.enableDemoBastion == true ? 0 : local.cntFgt
 
   depends_on = [aws_network_interface.eniFgtPort1]
-  vpc        = true
 
   tags = {
     Name      = "${local.prefixEipFgtMgmt}-${local.azFtntList[count.index % length(var.azList)]}-${count.index + local.cntFgtStart}"
