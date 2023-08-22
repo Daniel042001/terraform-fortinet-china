@@ -12,6 +12,7 @@ variable "paramIgwId" {
   default = ""
 }
 
+variable "enableFgStandalone" { type = bool }
 variable "enableNlbPreserveClientIp" { type = bool }
 
 variable "enableDemoBastion" { type = bool }
@@ -135,8 +136,8 @@ variable "instanceTypeFgtFixed" { type = string }
 variable "versionFgt" {
   type = string
   validation {
-    condition     = can(regex("^(fgtvm64|fgtvm70|fgtvm72)$", var.versionFgt))
-    error_message = "PLEASE CHOOSE FROM 'fgtvm64', 'fgtvm70' OR 'fgtvm72'"
+    condition     = can(regex("^([6|7].[0|2|4].[0-9][0-9]?)$", var.versionFgt))
+    error_message = "PLEASE CHOOSE FROM '6.4.x', '7.0.x', '7.2.x' OR '7.4.x'"
   }
 }
 
@@ -144,8 +145,8 @@ variable "versionFgt" {
 variable "cntFwbByol" {
   type = number
   validation {
-    condition     = var.cntFwbByol > 0
-    error_message = "FortiWeb COUNT MUST BE GREAT THAN 0"
+    condition     = var.cntFwbByol >= 0
+    error_message = "FortiWeb COUNT MUST BE GREAT THAN OR EQUAL TO 0"
   }
 }
 

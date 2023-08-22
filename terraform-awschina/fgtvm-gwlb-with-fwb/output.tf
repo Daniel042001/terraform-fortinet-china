@@ -19,9 +19,9 @@ output "c_FortiWeb-BYOL-Statistics" {
 }
 
 output "d_NLB-Simple-WEB" {
-  value = var.enableSimpleWebSrv == false ? null : module.nlbPublic.nlb
+  value = var.enableSimpleWebSrv == false ? null : module.nlbPublic[0].nlb
 }
 
 output "d_NLB-DVWA" {
-  value = var.enableDemoDvwa == false ? null : "${module.nlbPublic.nlb}/DVWA/login.php"
+  value = var.enableDemoDvwa == false ? null : "${module.nlbPublic[0].nlb}/DVWA/login.php"
 }

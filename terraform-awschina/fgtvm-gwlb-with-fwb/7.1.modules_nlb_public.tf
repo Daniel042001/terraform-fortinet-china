@@ -1,4 +1,6 @@
 module "nlbPublic" {
+  count = var.enableFgStandalone == true ? 0 : 1
+
   source                       = "./modules/nlb"
   nameNlb                      = "nlb-public"
   ProjectName                  = var.ProjectName

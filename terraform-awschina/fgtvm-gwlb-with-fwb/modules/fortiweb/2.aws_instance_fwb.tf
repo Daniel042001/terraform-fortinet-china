@@ -54,7 +54,7 @@ resource "aws_eip" "eipFwbMgmt" {
   count = var.enableDemoBastion == true ? 0 : local.cntFwb
 
   depends_on = [aws_network_interface.eniFwbPort1]
-  vpc        = true
+  domain     = "vpc"
 
   tags = {
     Name      = "${local.prefixEipFwbMgmt}-${local.azFtntList[count.index % length(var.azList)]}-${count.index + local.cntFwbStart}"

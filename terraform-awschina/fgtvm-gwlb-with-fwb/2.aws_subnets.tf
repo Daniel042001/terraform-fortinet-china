@@ -49,7 +49,7 @@ resource "aws_subnet" "subnetFgtPort2" {
 
 #################### FortiWeb ####################
 resource "aws_subnet" "subnetFwbPort1" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   vpc_id            = local.idVpcNgfw
   cidr_block        = var.cidrSubnetFwbPort1[count.index]
@@ -66,7 +66,7 @@ resource "aws_subnet" "subnetFwbPort1" {
 
 #################### NAT Gateway ####################
 resource "aws_subnet" "subnetNatgwVpcNgfw" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   vpc_id            = local.idVpcNgfw
   cidr_block        = var.cidrSubnetNatgwVpcNgfw[count.index]
@@ -100,7 +100,7 @@ resource "aws_subnet" "subnetGwlbeNgfw" {
 
 #################### NLB-Public ####################
 resource "aws_subnet" "subnetNlbPublic" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   vpc_id            = local.idVpcNgfw
   cidr_block        = var.cidrSubnetNlbPublic[count.index]

@@ -8,18 +8,22 @@ CompanyName = "FTNT"
 # -var variables are stackable
 enableNewVpcNgfw          = true
 
+# when 'enableFgStandalone = true', only FortiGate and GWLB will be provisioned, no NLB, no NAT-GW and related route table
+enableFgStandalone        = true
+
+# when 'enableFgStandalone = true', this will be ignored
 enableNlbPreserveClientIp = true
 
 # when 'enableDemoBastion = true', an Ubuntu instance will be placed into subnetBastionAz1
 enableDemoBastion         = false
 
 # when 'enableSimpleWebSrv = true', Ubuntu instance(s) will be placed into subnetApp[*] per az
-enableSimpleWebSrv        = true
+enableSimpleWebSrv        = false
 
 # when 'enableDemoDvwa = true', an Ubuntu instance will be placed into subnetDvwaAz1
-enableDemoDvwa            = true
+enableDemoDvwa            = false
 
-enableDemoApigw           = true
+enableDemoApigw           = false
 
 
 
@@ -63,17 +67,19 @@ cidrSubnetBastionVncAz1   = "172.25.254.0/25"
 
 #################### FortiGate ####################
 cntFgtByol                = 0
-cntFgtPayg                = 1
+cntFgtPayg                = 2
 
-instanceTypeFgtFixed      = "c5.large"
+instanceTypeFgtFixed      = "c6i.large"
 
 #### choose 'FortiGate FOS Version' ####
-versionFgt              = "fgtvm72"
-# versionFgt              = "fgtvm70"
-# versionFgt              = "fgtvm64"
+#### FortiGate in AWS-China will only work with FOS72!!!
+# versionFgt              = "7.4.0"
+versionFgt              = "7.2.5"
+# versionFgt              = "7.0.12"
+# versionFgt              = "6.4.13"
 
 #################### FortiWeb ####################
-cntFwbByol                = 1
+cntFwbByol                = 0
 
 portFwbHttps              = "8443"
 instanceTypeFwbFixed      = "m5.large"
@@ -108,8 +114,6 @@ portFgtHttps          = "8443"
 licenseFiles          = [ 
                           "FGVM02TM22017609-AWS.lic",
                           "FGVM02TM22017610-AWS.lic",
-                          "FGVM02TM22017607-Azure.lic",
-                          "FGVM02TM22017608-Azure.lic",
                           "FGVM02TM22016495-Aliyun.lic",
                           "FGVM02TM22016496-Aliyun.lic",
                         ]

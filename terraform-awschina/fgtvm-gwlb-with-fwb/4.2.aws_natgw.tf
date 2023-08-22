@@ -4,9 +4,9 @@ locals {
 }
 
 resource "aws_eip" "eipNatgwVpcNgfw" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name      = "${local.prefixEipNatgwVpcNgfw}-${local.azFtntList[count.index]}"
@@ -16,7 +16,7 @@ resource "aws_eip" "eipNatgwVpcNgfw" {
 }
 
 resource "aws_nat_gateway" "natgwVpcNgfw" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   allocation_id     = aws_eip.eipNatgwVpcNgfw[count.index].id
   connectivity_type = "public"

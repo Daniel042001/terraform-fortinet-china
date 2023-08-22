@@ -13,6 +13,7 @@ locals {
 
 #################### Route Table: Egde Association ####################
 resource "aws_route_table" "rtbEdgeAssociation" {
+  count  = var.enableFgStandalone == true ? 0 : 1
   vpc_id = local.idVpcNgfw
 
   dynamic "route" {
@@ -46,16 +47,29 @@ resource "aws_route_table" "rtbEdgeAssociation" {
   }
 }
 
+
+resource "aws_route_table" "rtbEdgeAssociationStandalone" {
+  count  = var.enableFgStandalone == true ? 1 : 0
+  vpc_id = local.idVpcNgfw
+
+  tags = {
+    Name      = local.nameRtbEdgeAssociation
+    Terraform = true
+    Project   = var.ProjectName
+  }
+}
+
+
 resource "aws_route_table_association" "associateVpc1Igw" {
   gateway_id     = local.idIgwVpcNgfw
-  route_table_id = aws_route_table.rtbEdgeAssociation.id
+  route_table_id = var.enableFgStandalone == true ? aws_route_table.rtbEdgeAssociationStandalone[0].id : aws_route_table.rtbEdgeAssociation[0].id
 }
 
 
 
 #################### Route Table: Nat Gateway ####################
 resource "aws_route_table" "rtbNatgw" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   vpc_id = local.idVpcNgfw
 
@@ -72,7 +86,8 @@ resource "aws_route_table" "rtbNatgw" {
 }
 
 resource "aws_route_table_association" "associateSubnetNatgw" {
-  count          = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
+
   subnet_id      = aws_subnet.subnetNatgwVpcNgfw[count.index].id
   route_table_id = aws_route_table.rtbNatgw[count.index].id
 }
@@ -81,7 +96,7 @@ resource "aws_route_table_association" "associateSubnetNatgw" {
 
 ################### Route Table: NLB-Public ####################
 resource "aws_route_table" "rtbNlbPublic" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
   vpc_id = local.idVpcNgfw
 
@@ -98,7 +113,8 @@ resource "aws_route_table" "rtbNlbPublic" {
 }
 
 resource "aws_route_table_association" "associateSubnetNlbPublic" {
-  count          = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
+
   subnet_id      = aws_subnet.subnetNlbPublic[count.index].id
   route_table_id = aws_route_table.rtbNlbPublic[count.index].id
 }
@@ -165,7 +181,7 @@ resource "aws_route_table_association" "associateSubnetFgtPort1" {
 }
 
 resource "aws_route_table_association" "associateSubnetFwbPort1" {
-  count          = length(var.azList)
+  count          = var.enableFgStandalone == true ? 0 : length(var.azList)
   subnet_id      = aws_subnet.subnetFwbPort1[count.index].id
   route_table_id = var.enableDemoBastion == true ? aws_route_table.rtbNvaMgmt[count.index].id : aws_route_table.rtbNvaMgmt[0].id
 }

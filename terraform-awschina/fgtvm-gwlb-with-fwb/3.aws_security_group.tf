@@ -82,6 +82,8 @@ resource "aws_security_group" "sgFgtPort2" {
 
 
 resource "aws_security_group" "sgFwbPort1" {
+  count = var.enableFgStandalone == true ? 0 : 1
+
   name        = local.nameSgFwbPort1
   description = local.nameSgFwbPort1
   vpc_id      = local.idVpcNgfw

@@ -24,6 +24,6 @@ module "fortiweb-byol" {
   instanceTypeFwbFixed = var.instanceTypeFwbFixed
   portFwbHttps         = var.portFwbHttps
   licenseTypeFwb       = "byol"
-  sgFwbPort1           = aws_security_group.sgFwbPort1.id
+  sgFwbPort1           = var.enableFgStandalone == true ? null : aws_security_group.sgFwbPort1[0].id
   subnetFwbPort1       = [for subnet in aws_subnet.subnetFwbPort1 : subnet.id]
 }
