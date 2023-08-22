@@ -21,12 +21,12 @@ resource "aws_instance" "fortigate" {
 
   ami = data.aws_ami.fortigate.id
 
-  # ami               = var.versionFgt == "fgtvm64" ? data.aws_ami.amiFgtvm64.id : var.versionFgt == "fgtvm70" ? data.aws_ami.amiFgtvm70.id : data.aws_ami.amiFgtvm72.id
   instance_type     = var.instanceTypeFgtFixed
   availability_zone = local.azFtntList[count.index % length(var.azList)]
   user_data = templatefile(var.instanceBootstrapFgt,
     {
       enablePrimary    = (count.index == 0 && var.cntFgtByol != 0 && var.licenseTypeFgt == "byol") || (count.index == 0 && var.cntFgtByol == 0 && var.licenseTypeFgt == "payg") ? true : false
+      versionFgt       = var.licenseTypeFgt == "payg" && local.nameAwsLocation == "CHINA" ? "7.2.0" : var.versionFgt
       licenseTypeFgt   = var.licenseTypeFgt
       licenseFile      = var.licenseTypeFgt == "byol" ? var.licenseFiles[count.index] : null
       portFgtHttps     = var.portFgtHttps

@@ -66,10 +66,10 @@ cidrSubnetApp             = ["172.25.141.0/24",
 cidrSubnetBastionVncAz1   = "172.25.254.0/25"
 
 #################### FortiGate ####################
-cntFgtByol                = 0
-cntFgtPayg                = 2
+cntFgtByol                = 2
+cntFgtPayg                = 0
 
-instanceTypeFgtFixed      = "c6i.large"
+instanceTypeFgtFixed      = "c6n.large"
 
 #### choose 'FortiGate FOS Version' ####
 #### FortiGate in AWS-China will only work with FOS72!!!
