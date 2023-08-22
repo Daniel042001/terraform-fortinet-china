@@ -64,7 +64,7 @@ resource "aws_lb_target_group_attachment" "targetGrpToFgtPayg" {
 data "aws_network_interface" "eniGwlbeVpcNgfw" {
   count = length(var.azList)
 
-  depends_on = [aws_vpc_endpoint.gwlbeVpcNgfw]
+  depends_on = [aws_lb_listener.gwlbFgtListener]
 
   filter {
     name   = "subnet-id"
