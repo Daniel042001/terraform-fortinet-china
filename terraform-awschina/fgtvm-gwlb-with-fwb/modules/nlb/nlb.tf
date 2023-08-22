@@ -13,7 +13,7 @@ locals {
 resource "aws_eip" "eipNlbPublic" {
   count = var.enableLbPublic == true ? length(var.azList) : 0
 
-  vpc = true
+  domain = "vpc"
 
   tags = {
     Name      = "${local.prefixEipNlbPublic}-${local.azFtntList[count.index % length(var.azList)]}"

@@ -48,21 +48,12 @@ resource "aws_route_table" "rtbEdgeAssociation" {
 }
 
 
-resource "aws_route_table" "rtbEdgeAssociationStandalone" {
-  count  = var.enableFgStandalone == true ? 1 : 0
-  vpc_id = local.idVpcNgfw
-
-  tags = {
-    Name      = local.nameRtbEdgeAssociation
-    Terraform = true
-    Project   = var.ProjectName
-  }
-}
-
 
 resource "aws_route_table_association" "associateVpc1Igw" {
+  count = var.enableFgStandalone == true ? 0 : 1
+
   gateway_id     = local.idIgwVpcNgfw
-  route_table_id = var.enableFgStandalone == true ? aws_route_table.rtbEdgeAssociationStandalone[0].id : aws_route_table.rtbEdgeAssociation[0].id
+  route_table_id = aws_route_table.rtbEdgeAssociation[0].id
 }
 
 
@@ -123,6 +114,8 @@ resource "aws_route_table_association" "associateSubnetNlbPublic" {
 
 #################### Route Table: GWLBE-VPC-NGFW ####################
 resource "aws_route_table" "rtbGwlbeNgfw" {
+  count = var.enableFgStandalone == true ? 0 : 1
+
   vpc_id = local.idVpcNgfw
 
   route {
@@ -138,9 +131,10 @@ resource "aws_route_table" "rtbGwlbeNgfw" {
 }
 
 resource "aws_route_table_association" "associateSubnetGwlbeNgfw" {
-  count          = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
+
   subnet_id      = aws_subnet.subnetGwlbeNgfw[count.index].id
-  route_table_id = aws_route_table.rtbGwlbeNgfw.id
+  route_table_id = aws_route_table.rtbGwlbeNgfw[0].id
 }
 
 

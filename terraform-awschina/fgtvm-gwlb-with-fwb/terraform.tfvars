@@ -74,8 +74,8 @@ instanceTypeFgtFixed      = "c6i.large"
 #### choose 'FortiGate FOS Version' ####
 #### FortiGate in AWS-China will only work with FOS72!!!
 # versionFgt              = "7.4.0"
-versionFgt              = "7.2.5"
-# versionFgt              = "7.0.12"
+# versionFgt              = "7.2.5"
+versionFgt              = "7.0.12"
 # versionFgt              = "6.4.13"
 
 #################### FortiWeb ####################

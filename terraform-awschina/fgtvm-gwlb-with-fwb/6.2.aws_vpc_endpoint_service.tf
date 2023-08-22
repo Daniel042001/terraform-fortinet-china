@@ -7,6 +7,8 @@ locals {
 
 ################### ENDPOINT SERVICE - GWLB ####################
 resource "aws_vpc_endpoint_service" "vpceSrvcGwlbVpcNgfw" {
+  count = var.enableFgStandalone == true ? 0 : 1
+
   acceptance_required        = false
   gateway_load_balancer_arns = [aws_lb.gwlbFgt.arn]
 
@@ -21,11 +23,11 @@ resource "aws_vpc_endpoint_service" "vpceSrvcGwlbVpcNgfw" {
 
 ################### GWLBE AT VPC-FGT ####################
 resource "aws_vpc_endpoint" "gwlbeVpcNgfw" {
-  count = length(var.azList)
+  count = var.enableFgStandalone == true ? 0 : length(var.azList)
 
-  service_name      = aws_vpc_endpoint_service.vpceSrvcGwlbVpcNgfw.service_name
+  service_name      = aws_vpc_endpoint_service.vpceSrvcGwlbVpcNgfw[0].service_name
   subnet_ids        = [aws_subnet.subnetGwlbeNgfw[count.index].id]
-  vpc_endpoint_type = aws_vpc_endpoint_service.vpceSrvcGwlbVpcNgfw.service_type
+  vpc_endpoint_type = aws_vpc_endpoint_service.vpceSrvcGwlbVpcNgfw[0].service_type
   vpc_id            = local.idVpcNgfw
 
   tags = {

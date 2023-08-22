@@ -48,7 +48,7 @@ resource "aws_eip" "eipUbuntu" {
   count = var.public == true ? var.cntUbuntu : 0
 
   depends_on        = [aws_network_interface.eniUbuntu]
-  vpc               = true
+  domain            = "vpc"
   network_interface = aws_network_interface.eniUbuntu[count.index].id
 
   tags = {
